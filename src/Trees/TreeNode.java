@@ -47,7 +47,7 @@ class BinaryTree{
         if(root ==  null) return;
         postOrderTraversal(root.left);
         postOrderTraversal(root.right);
-        System.out.print(root.val);
+        System.out.print(root.val + " ");
     }
 
     // Inorder Traversal
@@ -87,14 +87,26 @@ class BinaryTree{
     }
 
     //Covert Sorted Array to Binary Tree
-    public TreeNode arrayToBST(int[] arr, TreeNode root, int start, int end){
+    public TreeNode arrayToBST(int[] arr, int start, int end){
+
+        // Edge Case
+        if(start > end) return null;
         // Get Mid
         int mid = (start + end) /2;
         //Edge Case
-        if(root == null) return  new TreeNode(arr[mid]);
-        if(arr[mid] < root.val)
-            root.left = arrayToBST(arr, root.left, start, mid-1);
-        if(arr[mid] > root.val) root.right = arrayToBST(arr, root.right, mid+1, end);
+        TreeNode root =  new TreeNode(arr[mid]);
+        root.left = arrayToBST(arr,  start, mid-1);
+        root.right = arrayToBST(arr, mid+1, end);
         return root;
+    }
+
+    // Searching A Node in a Binary Tree
+    public boolean search(TreeNode root, int val){
+        if(root ==  null) return false;
+        if(root.val == val) return  true;
+        if(val < root.val)
+            return search(root.left,val);
+        return search(root.right, val);
+
     }
 }
